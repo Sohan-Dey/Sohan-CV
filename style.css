@@ -3,14 +3,17 @@
    dark theme, keeping it minimal
    ================================ */
 
-/* google font - picked Inconsolata because it looks clean and kinda coder-y */
-@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@300;400;500;600&family=Lato:wght@300;400&display=swap');
+/* using Manrope - clean and modern, not too techy looking */
+/* and Bricolage Grotesque for headings, gives it a more editorial feel */
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Manrope:wght@300;400;500;600;700&display=swap');
 
 /* css variables so I don't repeat colors everywhere */
 :root {
     --bg:        #111213;   /* main background */
     --surface:   #1a1b1d;   /* cards and tiles */
+    --surface-2: #222326;   /* slightly lighter for hover states */
     --border:    #2a2b2e;   /* lines and borders */
+    --border-2:  #3a3b3e;   /* slightly brighter border for hover */
     --text:      #d4d4d4;   /* normal text */
     --muted:     #6b6b6b;   /* less important stuff */
     --accent:    #c9a96e;   /* highlight color - warm gold, feels professional */
@@ -24,12 +27,17 @@
     box-sizing: border-box;
 }
 
+/* smooth scroll when clicking on anchor links like the name -> contact */
+html {
+    scroll-behavior: smooth;
+}
+
 /* base body styles */
 body {
     background-color: var(--bg);
     color: var(--text);
-    font-family: 'Lato', sans-serif;
-    font-weight: 300;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 400;
     font-size: 15px;
     line-height: 1.7;
     /* center the content and limit width so it doesn't stretch too wide */
@@ -46,7 +54,62 @@ header {
     margin-bottom: 56px;
     /* a subtle left accent line on the header */
     border-left: 2px solid var(--accent);
-    padding-left: 16px;
+    padding-left: 20px;
+}
+
+/* flex container for profile pic + name */
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* ----- profile picture ----- */
+.profile-pic {
+    position: relative;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    /* smooth border color change on hover */
+    transition: border-color 0.3s ease, transform 0.3s ease;
+    flex-shrink: 0; /* don't shrink on smaller screens */
+}
+
+/* the actual image */
+.profile-pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* crops nicely instead of stretching */
+    position: relative;
+    z-index: 2; /* sits on top of the fallback */
+}
+
+/* fallback initials shown when no image */
+.profile-fallback {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    z-index: 1;
+}
+
+/* hover effect on profile pic */
+.profile-pic:hover {
+    border-color: var(--accent);
+    transform: scale(1.05);
+}
+
+/* ----- name and tagline ----- */
+.header-text {
+    flex: 1;
 }
 
 /* the name is a clickable link that goes to contact */
@@ -56,26 +119,27 @@ header {
 }
 
 header h1 {
-    font-family: 'Inconsolata', monospace;
-    font-size: 2rem;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 2.2rem;
     font-weight: 600;
-    letter-spacing: 0.04em;
+    letter-spacing: -0.01em;
     color: #f0ede8;
+    line-height: 1.1;
+    transition: color 0.3s ease;
 }
 
-/* underline appears on hover to hint it's clickable */
+/* color changes on hover so it's clear it's clickable */
 .name-link:hover h1 {
-    text-decoration: underline;
-    text-decoration-color: var(--accent);
-    text-underline-offset: 4px;
+    color: var(--accent);
 }
 
 .tagline {
     color: var(--muted);
     font-size: 0.85rem;
-    margin-top: 4px;
-    letter-spacing: 0.06em;
+    margin-top: 6px;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
+    font-weight: 500;
 }
 
 /* ======================== */
@@ -87,10 +151,11 @@ section {
 }
 
 .section-title {
-    font-family: 'Inconsolata', monospace;
+    font-family: 'Manrope', sans-serif;
     font-size: 0.75rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
+    font-weight: 600;
     color: var(--accent);
     margin-bottom: 20px;
     /* little line after the title */
@@ -129,14 +194,35 @@ hr {
     display: flex;
     align-items: flex-start;
     gap: 12px;
+    /* smooth transitions for hover */
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
 }
 
+/* hover lift effect */
+.skill-card:hover {
+    background: var(--surface-2);
+    border-color: var(--border-2);
+    transform: translateY(-2px);
+}
 
+.skill-icon {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 2px;
+    flex-shrink: 0;
+    /* subtle bounce on hover */
+    transition: transform 0.3s ease;
+}
+
+/* icon scales up slightly when hovering the card */
+.skill-card:hover .skill-icon {
+    transform: scale(1.15);
+}
 
 .skill-name {
-    font-family: 'Inconsolata', monospace;
-    font-size: 0.9rem;
-    font-weight: 500;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 600;
     color: #e8e8e8;
 }
 
@@ -144,20 +230,14 @@ hr {
     font-size: 0.78rem;
     color: var(--muted);
     margin-top: 2px;
+    line-height: 1.5;
 }
-/* brand colors for skill icons */
-.skill-icon svg { opacity: 1; }
-
-.skill-icon svg path {
-    fill: currentColor;
-}
-
 
 /* ======================== */
 /*         TRAITS           */
 /* ======================== */
 
-/* wrapping grid so it adjusts based on how many items there are */
+/* wrapping flex so it adjusts based on how many items there are */
 .traits-grid {
     display: flex;
     flex-wrap: wrap;
@@ -172,16 +252,30 @@ hr {
     align-items: center;
     gap: 8px;
     font-size: 0.85rem;
+    /* hover transition */
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
 }
 
-.trait-item span {
-    font-size: 1rem;
+/* lifts up on hover */
+.trait-item:hover {
+    background: var(--surface-2);
+    border-color: var(--border-2);
+    transform: translateY(-2px);
+}
+
+.trait-item img {
+    transition: transform 0.3s ease;
+}
+
+/* icon spins a bit on hover - just a small fun touch */
+.trait-item:hover img {
+    transform: rotate(-10deg) scale(1.15);
 }
 
 .trait-item p {
     color: var(--text);
+    font-weight: 500;
 }
-
 
 /* ======================== */
 /*        LANGUAGES         */
@@ -200,6 +294,15 @@ hr {
     padding: 10px 14px;
     border: 1px solid var(--border);
     background: var(--surface);
+    /* hover transition */
+    transition: background 0.25s ease, border-color 0.25s ease, padding-left 0.25s ease;
+}
+
+/* slides slightly right on hover */
+.lang-item:hover {
+    background: var(--surface-2);
+    border-color: var(--border-2);
+    padding-left: 18px;
 }
 
 .lang-icon {
@@ -207,22 +310,24 @@ hr {
 }
 
 .lang-name {
-    flex: 1; /* this makes the name take up remaining space, pushing level to the right */
+    flex: 1; /* takes up remaining space, pushing level to the right */
     font-size: 0.9rem;
     color: var(--text);
+    font-weight: 500;
 }
 
 /* the level badge */
 .lang-level {
-    font-family: 'Inconsolata', monospace;
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
     letter-spacing: 0.08em;
     padding: 3px 8px;
     border: 1px solid;
+    border-radius: 3px;
 }
 
-/* different colors for different levels - green for high, yellow for mid, grey for low */
+/* different colors for different levels - green for high, gold for mid, grey for low */
 .lang-level.c2 { color: #7ec98f; border-color: #7ec98f33; background: #7ec98f0d; }
 .lang-level.c1 { color: #7ec98f; border-color: #7ec98f33; background: #7ec98f0d; }
 .lang-level.b2 { color: var(--accent); border-color: #c9a96e33; background: #c9a96e0d; }
@@ -244,37 +349,52 @@ hr {
 .timeline-item {
     position: relative;
     margin-bottom: 28px;
+    /* small transition for hover */
+    transition: padding-left 0.25s ease;
+}
+
+/* shifts right slightly on hover */
+.timeline-item:hover {
+    padding-left: 6px;
 }
 
 /* the little dot on the timeline line */
 .timeline-dot {
     position: absolute;
-    left: -28px; /* moves it over the border-left line */
+    left: -28px; /* sits on top of the border-left line */
     top: 6px;
-    width: 7px;
-    height: 7px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     background: var(--dot);
     border: 1px solid var(--bg); /* gap between dot and line */
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* dot grows and glows on hover */
+.timeline-item:hover .timeline-dot {
+    transform: scale(1.4);
+    box-shadow: 0 0 0 4px rgba(201, 169, 110, 0.15);
 }
 
 .timeline-date {
-    font-family: 'Inconsolata', monospace;
+    font-family: 'Manrope', sans-serif;
     font-size: 0.72rem;
     color: var(--muted);
     letter-spacing: 0.06em;
+    font-weight: 500;
     display: block;
     margin-bottom: 3px;
 }
 
 .timeline-title {
-    font-size: 0.92rem;
-    font-weight: 400;
+    font-size: 0.95rem;
+    font-weight: 600;
     color: #e0e0e0;
 }
 
 .timeline-sub {
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     color: var(--muted);
     margin-top: 2px;
 }
@@ -296,18 +416,30 @@ hr {
     padding: 18px 16px;
     /* left accent on each tile */
     border-left: 2px solid var(--accent);
+    /* hover transition */
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease, border-left-width 0.25s ease;
+}
+
+/* lifts and accent grows on hover */
+.project-tile:hover {
+    filter: brightness(1.15);
 }
 
 .project-name {
-    font-family: 'Inconsolata', monospace;
-    font-size: 0.9rem;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1rem;
     font-weight: 600;
     color: #e8e8e8;
     margin-bottom: 6px;
+    transition: color 0.25s ease;
+}
+
+.project-tile:hover .project-name {
+    color: var(--text);
 }
 
 .project-desc {
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     color: var(--muted);
     line-height: 1.6;
     margin-bottom: 12px;
@@ -320,15 +452,68 @@ hr {
     gap: 6px;
 }
 
+/* base styling - shared by all tags */
 .project-tags span {
-    font-family: 'Inconsolata', monospace;
-    font-size: 0.68rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.7rem;
+    padding: 3px 8px;
+    letter-spacing: 0.02em;
+    font-weight: 500;
+    border-radius: 3px;
+    border: 1px solid;
+    cursor: default;
+    /* default colors used if no data-tech matches */
     color: var(--muted);
-    border: 1px solid var(--border);
-    padding: 2px 7px;
-    letter-spacing: 0.04em;
+    border-color: var(--border);
+    background: rgba(255, 255, 255, 0.02);
+    transition: transform 0.2s ease, filter 0.2s ease;
 }
 
+/* lift slightly on hover - brightness handled by filter so it works for every color */
+.project-tags span:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.3);
+}
+
+/* ---- per-tech colors (subtle, low-saturation) ---- */
+
+/* frontend */
+.project-tags span[data-tech="html"]       { color: #d97757; border-color: #d9775733; background: #d977570d; }
+.project-tags span[data-tech="css"]        { color: #6aa9d9; border-color: #6aa9d933; background: #6aa9d90d; }
+.project-tags span[data-tech="javascript"] { color: #d4c26a; border-color: #d4c26a33; background: #d4c26a0d; }
+.project-tags span[data-tech="typescript"] { color: #6a8fd4; border-color: #6a8fd433; background: #6a8fd40d; }
+.project-tags span[data-tech="react"]      { color: #6ad4d4; border-color: #6ad4d433; background: #6ad4d40d; }
+.project-tags span[data-tech="tailwind"]   { color: #7eb8e8; border-color: #7eb8e833; background: #7eb8e80d; }
+.project-tags span[data-tech="vite"]       { color: #a76ad4; border-color: #a76ad433; background: #a76ad40d; }
+
+/* backend / databases */
+.project-tags span[data-tech="hono"]       { color: #e89066; border-color: #e8906633; background: #e890660d; }
+.project-tags span[data-tech="bun"]        { color: #e8d4a7; border-color: #e8d4a733; background: #e8d4a70d; }
+.project-tags span[data-tech="drizzle"]    { color: #a7d46a; border-color: #a7d46a33; background: #a7d46a0d; }
+.project-tags span[data-tech="zod"]        { color: #6a8fd4; border-color: #6a8fd433; background: #6a8fd40d; }
+.project-tags span[data-tech="kinde"]      { color: #b884d4; border-color: #b884d433; background: #b884d40d; }
+.project-tags span[data-tech="mysql"]      { color: #6ac0c8; border-color: #6ac0c833; background: #6ac0c80d; }
+.project-tags span[data-tech="python"]     { color: #6aa9d9; border-color: #6aa9d933; background: #6aa9d90d; }
+.project-tags span[data-tech="java"]       { color: #d48e6a; border-color: #d48e6a33; background: #d48e6a0d; }
+
+/* tools */
+.project-tags span[data-tech="github"]     { color: #c4c4c4; border-color: #c4c4c433; background: #c4c4c40d; }
+.project-tags span[data-tech="eclipse"]    { color: #b884d4; border-color: #b884d433; background: #b884d40d; }
+.project-tags span[data-tech="tomcat"]     { color: #d4c26a; border-color: #d4c26a33; background: #d4c26a0d; }
+
+/* individual tag hover - tag keeps its own color but pops out more */
+.project-tags span:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.3) saturate(1.4);
+    /* boost the background a bit so the tag looks "filled in" more */
+    background-color: color-mix(in srgb, currentColor 18%, transparent);
+    border-color: currentColor;
+}
+
+/* when parent tile is hovered, all tags glow softly in their own colors */
+.project-tile:hover .project-tags span {
+    filter: brightness(1.15) saturate(1.2);
+}
 /* ======================== */
 /*        CONTACT           */
 /* ======================== */
@@ -337,21 +522,128 @@ hr {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-bottom: 32px;
 }
 
 .contact-list p {
-    font-size: 0.88rem;
+    font-size: 0.9rem;
     color: var(--text);
+    transition: transform 0.25s ease;
+}
+
+/* slides right a bit on hover */
+.contact-list p:hover {
+    transform: translateX(4px);
 }
 
 .contact-list a {
     color: var(--accent);
     text-decoration: none;
+    transition: opacity 0.2s ease;
 }
 
 /* underline on hover so it's clear it's a link */
 .contact-list a:hover {
     text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* ======================== */
+/*      CONTACT FORM        */
+/* ======================== */
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+}
+
+/* name + email side by side */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* labels above inputs */
+.form-group label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+}
+
+/* shared style for input and textarea */
+.form-group input,
+.form-group textarea {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px 12px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.88rem;
+    outline: none;
+    transition: border-color 0.25s ease, background 0.25s ease;
+    /* resize only the textarea vertically */
+    resize: none;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 90px;
+    font-family: 'Manrope', sans-serif;
+}
+
+/* focus state - border turns gold */
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--accent);
+    background: var(--surface-2);
+}
+
+/* placeholder styling */
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--muted);
+    opacity: 0.7;
+}
+
+/* submit button */
+.form-btn {
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    padding: 12px 20px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    align-self: flex-start;
+    /* hover transition */
+    transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* button gets brighter and lifts on hover */
+.form-btn:hover {
+    background: #d6b87a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(201, 169, 110, 0.2);
+}
+
+/* small click feedback */
+.form-btn:active {
+    transform: translateY(0);
 }
 
 /* ======================== */
@@ -365,18 +657,41 @@ footer {
     text-align: center;
     font-size: 0.75rem;
     color: var(--muted);
-    font-family: 'Inconsolata', monospace;
     letter-spacing: 0.06em;
 }
 
 /* ======================== */
-/*    RESPONSIVE - MOBILE   */
+/*    RESPONSIVE STUFF      */
 /* ======================== */
 
-/* stack single column on small screens */
+/* tablets and below */
+@media (max-width: 720px) {
+    body {
+        padding: 48px 20px 32px;
+    }
+
+    header h1 {
+        font-size: 1.9rem;
+    }
+}
+
+/* small phones */
 @media (max-width: 560px) {
     body {
-        padding: 40px 16px 32px;
+        padding: 36px 16px 28px;
+        font-size: 14px;
+    }
+
+    /* stack header vertically on mobile */
+    .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+
+    .profile-pic {
+        width: 64px;
+        height: 64px;
     }
 
     header h1 {
@@ -387,5 +702,50 @@ footer {
     .skills-grid,
     .projects-grid {
         grid-template-columns: 1fr;
+    }
+
+    /* form name + email also stack on mobile */
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    /* turn off some hover effects that don't make sense on touch screens */
+    .skill-card:hover,
+    .trait-item:hover,
+    .project-tile:hover,
+    .lang-item:hover {
+        transform: none;
+    }
+
+    .timeline-item:hover {
+        padding-left: 0;
+    }
+
+    .contact-list p:hover {
+        transform: none;
+    }
+}
+
+/* very small phones */
+@media (max-width: 380px) {
+    body {
+        padding: 28px 14px 24px;
+    }
+
+    header h1 {
+        font-size: 1.4rem;
+    }
+
+    .section-title {
+        font-size: 0.7rem;
+    }
+
+    .profile-pic {
+        width: 56px;
+        height: 56px;
+    }
+
+    .profile-fallback {
+        font-size: 1.2rem;
     }
 }
