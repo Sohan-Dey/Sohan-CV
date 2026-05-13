@@ -1,2 +1,3 @@
 # Sohan-CV
-need to learn how to hoste this site in here
+A simple portfolio site
+Made with CSS and HTML
